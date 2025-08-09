@@ -115,7 +115,7 @@ return{
 };
 
 //STRIPE WEBHOOK TO VERIFY PAYET ACTION :/STRIPE
-const stripeWebhook = async(req,rex)=>{
+export const stripeWebhook = async(req,rex)=>{
 //stripe gateway initilization
   const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers["stripe.signature"];
