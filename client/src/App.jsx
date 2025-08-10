@@ -17,7 +17,7 @@ import SellerLayout from './pages/seller/SellerLayout';
 import AddProducts from './pages/seller/AddProducts';
 import ProductList from './pages/seller/ProductList';
 import Orders from './pages/seller/Orders';
-import Loading from './componenets/loading';
+import Loading from './componenets/Loading';
 
 
 export const App = () => {
