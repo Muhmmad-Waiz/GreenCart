@@ -2,7 +2,7 @@ import React from 'react'
 import { MainBaneer } from '../componenets/MainBaneer'
 import Categories from '../componenets/Categories'
 import BestSeller from '../componenets/BestSeller'
-import BottomBanner from '../componenets/bottomBanner'
+import BottomBanner from '../componenets/BottomBanner'
 import NewsLetter from '../componenets/NewsLetter'
 
 const home = () => {
