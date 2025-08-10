@@ -5,7 +5,7 @@
 import { response } from "express";
 import Order from "../models/Order.js"
 import Product from "../models/product.js"
-import stripe from "stripe"
+import Stripe from "stripe"
 import User from "../models/User.js"
 
 export const placeOrderCOD = async (req, res) => {
@@ -81,7 +81,7 @@ export const placeOrderStripe= async (req, res) => {
     });
 
   //stripe gateaway initializayion
-  const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
+  const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
   //create linestripe for stripe
   const line_items= productData.map((item)=>{
 return{
@@ -115,10 +115,10 @@ return{
 };
 
 //STRIPE WEBHOOK TO VERIFY PAYET ACTION :/STRIPE
-export const stripeWebhook = async(req,rex)=>{
+export const stripeWebhook = async(req,response)=>{
 //stripe gateway initilization
-  const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
-  const sig = req.headers["stripe.signature"];
+  const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const sig = req.headers['stripe-signature'];
   let event;
    try {
     event= stripeInstance.webhooks.constructEvent(
@@ -132,8 +132,8 @@ export const stripeWebhook = async(req,rex)=>{
    }
    //handle the event
    switch (event.type) {
-    case "payment_intent.succeeded": {
-      const paymentIntent = e.data.object;
+    case "checkout.session.completed": {
+      const paymentIntent = event.data.object;
       const paymentIntentId = paymentIntent.id
       //getting session meta data
       const session = await stripeInstance.checkout.sessions.list({
