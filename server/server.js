@@ -11,16 +11,22 @@ import cartRouter from './routes/cartRoutes.js';
 import Address from './routes/addressRoutes.js';
 import orderrouter from './routes/orderRoutes.js';
 import {stripeWebhook} from './controllers/orderController.js'
+import bodyParser from "body-parser";
+
 
 const app = express();
 const port = process.env.PORT ||4000;
-await connectDB()
-await connectCloudinary()
+await connectDB();
+await connectCloudinary();
 
 //allow multiple origin
 const allowedOrigins = ['http://localhost:5173','http://localhost:5174','https://green-cart-bnyx.vercel.app']
-
-app.post('/stripe', express.raw({type:'application/json'}),stripeWebhook)
+app.post(
+  "/api/order/webhook",
+  bodyParser.raw({ type: "application/json" }), // ⬅ important!
+  stripeWebhook
+);
+// app.post('/stripe', express.raw({type:'application/json'}),stripeWebhook)
 //middleware configuration
 app.use(express.json())
 app.use(cookieParser())
